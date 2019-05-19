@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head></head>
+<body>
+<script src="js/ammo.js"></script>
+<script src="js/three.js"></script>
+<script>
+    //1. creating veribles for THREE JS
+    var renderer,camera,scene;
+    renderer= new THREE.WebGLRenderer({antialias:true});
+    // '{antialias:true}' is optional
+
+    renderer.setSize(window.innerWidth,window.innerHeight);
+
+    document.body.appendChild(renderer.domElement);
+
+    scene = new THREE.Scene();
+
+    camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
+
+    /*
+
+    PerspectiveCamera( fov : Number, aspect : Number, near : Number, far : Number )
+
+    fov — Camera frustum vertical field of view.
+
+    aspect — Camera frustum aspect ratio.
+
+    near — Camera frustum near plane.
+
+    far — Camera frustum far plane.
+
+    */
+    //Creating a box and making camera look at the box.
+    var boxGeometry = new THREE.BoxBufferGeometry(1,1,1); //width,height,length
+    var boxMaterial = new THREE.MeshBasicMaterial({color:0xffffff});
+    var box = new THREE.Mesh(boxGeometry,boxMaterial);
+    scene.add(box);
+    //Giving a position to camera.
+    camera.position.y = 10;
+    camera.position.x = 10;
+    scene.add(camera);
+
+    //2. Basic functions
+    function render(){
+        renderer.render(scene,camera);
+        renderer.setSize( window.innerWidth, window.innerHeight );
+        document.body.appendChild( renderer.domElement );
+
+    }
+    function update(){
+        camera.lookAt(box.position);
+    }
+    function gameLoop(){
+        requestAnimationFrame(gameLoop);
+        render();
+        update();
+    }
+    gameLoop();
+    initiatePhysics();
+    //3. creating basic physics environment with Ammo JS
+    var collisionConfiguration,dispatcher,broadphase,solver,softBodySolver,physicsWorld;
+    function initiatePhysics(){
+        collisionConfiguration = new Ammo.btSoftBodyRigidBodyCollisionConfiguration();
+        dispatcher = new Ammo.btCollisionDispatcher(collisionConfiguration);
+        broadphase = new Ammo.btDbvtBroadphase();
+        solver =new Ammo.btSequentialImpulseConstraintSolver();
+        softBodySolver = new Ammo.btDefaultSoftBodySolver();
+        physicsWorld = new Ammo.btSoftRigidDynamicsWorld(dispatcher,broadphase,solver,collisionConfiguration,softBodySolver);
+        physicsWorld.setGravity(new Ammo.btVector3(0,gravityConfiguration,0));
+        physicsWorld.getWorldInfo().set_m_gravity(new Ammo.btVector3(0,gravityConfiguration,0));
+    }
+</script>
+</body>
+</html>
