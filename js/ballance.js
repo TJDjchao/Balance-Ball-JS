@@ -41,6 +41,8 @@ Ammo().then(function(Ammo) {
         "KeyK":'braking',
         "KeyJ":'left',
         "KeyL":'right',
+        "ArrowLeft":'cylinderLeft',
+        "ArrowRight":'cylinderRight'
     };
 
     // - Functions -
@@ -80,7 +82,7 @@ Ammo().then(function(Ammo) {
 
         //坐标轴可视化
         var axesHelper=new THREE.AxesHelper(50);
-        scene.add(axesHelper);
+        //scene.add(axesHelper);
         //高光材质
         materialDynamic = new THREE.MeshPhongMaterial( { color:0xfca400 } );
         materialStatic = new THREE.MeshPhongMaterial( { color:0x999999 } );
@@ -234,8 +236,9 @@ Ammo().then(function(Ammo) {
         if(!friction) friction = 1;
 
         //加速度
-        const acceleratedSpeed=1;
-        const maxSpeed=5;
+        const acceleratedSpeed=0.1;
+        //最大速度
+        const maxSpeed=7;
 
         //创建 mesh 并加入 scene 中
         var mesh = new THREE.Mesh(shape, material_1);
@@ -580,6 +583,7 @@ Ammo().then(function(Ammo) {
 
         //创建球体
         createSphere(new THREE.Vector3(0,3,0),ZERO_QUATERNION,1,32,32,5,1000);
+
     }
 
     // - Init -
